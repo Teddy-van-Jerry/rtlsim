@@ -1,3 +1,6 @@
 {
-    "autoDocstring.docstringFormat": "sphinx"
+    "autoDocstring.docstringFormat": "sphinx",
+    "cSpell.words": [
+        "rtlsim"
+    ]
 }
