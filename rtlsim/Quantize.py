@@ -38,7 +38,7 @@ class Quantize:
         """Initialize the fixed-point quantization scheme.
 
         :param S: Sign bit (:code:`True` for signed, :code:`False` for unsigned)
-        :type S: integer
+        :type S: boolean
         :param W: Word bit width
         :type W: positive integer
         :param F: Fractional bit width
