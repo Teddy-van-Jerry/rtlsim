@@ -12,4 +12,8 @@ The :class:`Quantize` class is used to quantize a float-point/integer number or 
     :members:
     :undoc-members:
 
-.. automethod:: Quantize.__init__
+Some standalone functions are defined for simpler use.
+
+.. autofunction:: quantize
+
+.. autofunction:: quantizeSelf

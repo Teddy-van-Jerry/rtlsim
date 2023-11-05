@@ -7,4 +7,5 @@ __author__ = "Teddy van Jerry (Wuqiong Zhao)"
 
 from .common import FxpProps
 from .Quantize import Quantize
-
+from .Quantize import quantize
+from .Quantize import quantizeSelf

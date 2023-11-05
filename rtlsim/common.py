@@ -105,8 +105,8 @@ class FxpProps:
         """
         return FxpProps.v_max(S, W, F) - FxpProps.v_min(S, W, F)
     
-    def vPrevision(self, F):
-        """Prevision of the fixed-point number (:math:`2^{-F}`).
+    def vPrecision(self, F):
+        """Precision of the fixed-point number (:math:`2^{-F}`).
 
         :param F: Fractional bit width
         :type F: integer
