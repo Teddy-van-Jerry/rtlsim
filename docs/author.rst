@@ -1,4 +1,4 @@
 Author
 ======
 
-Wuqiong Zhao
+`Wuqiong Zhao <https://wqzhao.org>`_, Southeast University

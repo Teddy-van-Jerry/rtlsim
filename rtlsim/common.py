@@ -32,6 +32,8 @@ class FxpProps:
         'ceil': Rounding.CEIL,
         'fix': Rounding.FIX,
     }
+    overflow_options = list(overflow_dict.keys())
+    rounding_options = list(rounding_dict.keys())
 
     def __init__(self) -> None:
         pass
@@ -39,7 +41,8 @@ class FxpProps:
     def __repr__(self) -> str:
         return f'FxpProps()'
     
-    def vMinInt(self, S, W):
+    @staticmethod
+    def vMinInt(S, W):
         """Minimum value of the integer number (disregarding :code:`F`).
 
         :param S: Sign bit (:code:`True` for signed, :code:`False` for unsigned)
@@ -49,7 +52,8 @@ class FxpProps:
         """
         return -(1 << (W - 1)) if S else 0
     
-    def vMin(self, S, W, F):
+    @staticmethod
+    def vMin(S, W, F):
         """Minimum value of the fixed-point number.
 
         :param S: Sign bit (:code:`True` for signed, :code:`False` for unsigned)
@@ -59,9 +63,10 @@ class FxpProps:
         :param F: Fractional bit width
         :type F: integer
         """
-        return FxpProps.v_min_int(S, W) / (2 ** F)
+        return FxpProps.vMinInt(S, W) / (2 ** F)
     
-    def vMaxInt(self, S, W):
+    @staticmethod
+    def vMaxInt(S, W):
         """Maximum value of the integer number (disregarding :code:`F`).
 
         :param S: Sign bit (:code:`True` for signed, :code:`False` for unsigned)
@@ -71,7 +76,8 @@ class FxpProps:
         """
         return (1 << (W - 1)) - 1 if S else (1 << W) - 1
     
-    def vMax(self, S, W, F):
+    @staticmethod
+    def vMax(S, W, F):
         """Maximum value of the fixed-point number.
 
         :param S: Sign bit (:code:`True` for signed, :code:`False` for unsigned)
@@ -81,9 +87,10 @@ class FxpProps:
         :param F: Fractional bit width
         :type F: integer
         """
-        return FxpProps.v_max_int(S, W) / (2 ** F)
-    
-    def vRangeInt(self, S, W):
+        return FxpProps.vMaxInt(S, W) / (2 ** F)
+
+    @staticmethod
+    def vRangeInt(S, W):
         """Range of the integer number (disregarding :code:`F`).
 
         :param S: Sign bit (:code:`True` for signed, :code:`False` for unsigned)
@@ -91,9 +98,10 @@ class FxpProps:
         :param W: Word bit width
         :type W: positive integer
         """
-        return FxpProps.v_max_int(S, W) - FxpProps.v_min_int(S, W)
-    
-    def vRange(self, S, W, F):
+        return FxpProps.vMaxInt(S, W) - FxpProps.vMinInt(S, W)
+
+    @staticmethod
+    def vRange(S, W, F):
         """Range of the fixed-point number.
 
         :param S: Sign bit (:code:`True` for signed, :code:`False` for unsigned)
@@ -103,9 +111,10 @@ class FxpProps:
         :param F: Fractional bit width
         :type F: integer
         """
-        return FxpProps.v_max(S, W, F) - FxpProps.v_min(S, W, F)
-    
-    def vPrecision(self, F):
+        return FxpProps.vMax(S, W, F) - FxpProps.vMin(S, W, F)
+
+    @staticmethod
+    def vPrecision(F):
         """Precision of the fixed-point number (:math:`2^{-F}`).
 
         :param F: Fractional bit width
