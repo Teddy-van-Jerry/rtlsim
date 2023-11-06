@@ -57,10 +57,8 @@ class Quantize:
         if self.overflow == FxpProps.Overflow.WRAP:
             clipped_v = raw_v % (1 << self.W)
             # consider clipped_v can be a numpy.array
-            if self.S:
+            if self.S: # should be a negative value
                 clipped_v = np.where(clipped_v > self.v_max_int, clipped_v - self.v_range_int, clipped_v)
-            # if self.S and clipped_v > self.v_max_int: # should be a negative value
-            #     clipped_v = clipped_v - self.v_range_int
         else: # self.overflow == FxpProps.Overflow.SATURATE
             clipped_v = np.clip(raw_v, self.v_min_int, self.v_max_int)
         # Rounding behavior
@@ -87,14 +85,6 @@ class Quantize:
         :type x: Float or ``numpy.ndarray``
         :return: Scaled unsigned integer value of the fixed-point number
         :rtype: Unsigned integer-valued float or ``numpy.ndarray``
-
-        Here are some examples.
-
-            >>> a = np.array([1.23, -1.2, 34.1, 0, 3.26, 1, -2.34])
-            >>> print(rtlsim.Quantize(False, 6, 2).asBits(a))
-            ['000100' '111011' '001000' '000000' '001101' '000100' '110110']
-            >>> print(rtlsim.Quantize(False, 6, 2).asBits(3.14))
-            001100
         """
         rounded_v = self.asBitsInt(x)
         return rounded_v + self.v_range_int if rounded_v < 0 else rounded_v
@@ -106,6 +96,14 @@ class Quantize:
         :type x: Float or ``numpy.ndarray``
         :return: String bits representation of the fixed-point number
         :rtype: String or ``numpy.ndarray`` of strings
+
+        Here are some examples.
+
+            >>> a = np.array([1.23, -1.2, 34.1, 0, 3.26, 1, -2.34])
+            >>> print(rtlsim.Quantize(False, 6, 2).asBits(a))
+            ['000100' '111011' '001000' '000000' '001101' '000100' '110110']
+            >>> print(rtlsim.Quantize(False, 6, 2).asBits(3.14))
+            001100
         """
         rounded_v = self.asBitsInt(x)
         # if rounded_v is numpy.ndarray, then np.binary_repr will return a list of strings
